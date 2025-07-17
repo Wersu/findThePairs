@@ -1,14 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Find the pairs</title>
-    <link rel="stylesheet" href="css/main.css"/>
+    <link rel="stylesheet" href="css/main.css" />
 </head>
-<body>
-    <div id="game-board"></div>
 
-    <script type="module" src="main.js"></script>
+<body>
+    <div class="game-board-wrapper">
+        <h1>Найди пару</h1>
+
+        <div id="timer">Время: 0 сек</div>
+
+        <div id="game-board"></div>
+
+        <div class="controls">
+            <button id="restart-btn">Перезапуск</button>
+        </div>
+    </div>
+
+    <div id="win-modal" class="modal none">
+        <div class="modal-content">
+            <h2>Поздравляем!</h2>
+            <p>Вы прошли уровень за <span id="final-time"></span> секунд.</p>
+            <button id="next-level-btn">Следующий уровень</button>
+        </div>
+    </div>
+    <script type="module" src="js/main.js"></script>
 </body>
+
 </html>

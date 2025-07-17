@@ -1,8 +1,17 @@
+.game-board-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+    height: 100%;
+}
+
 #game-board {
-  display: grid;
-  grid-template-columns: repeat(6, 100px);
-  gap: 1rem;
-  justify-content: center;
-  align-items: center;
-  flex: 1;
+    display: grid;
+    grid-template-columns: repeat(6, 100px);
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
 }

@@ -1,19 +1,29 @@
 import data from './data.js'
+import { getTime, startTimer, stopTimer } from './timer.js';
+import { showModal } from './ui.js';
 
 const game = document.getElementById("game-board");
 
-let cards = [...data, ...data];
-cards.sort(() => 0.5 - Math.random());
 
 let flippedCards = [];
+let matchedPairs = 0;
 let lockBoard = false;
 
-cards.forEach((symbol, index) => {
-    const card = document.createElement('div');
-    card.classList.add('card');
-    card.dataset.name = symbol.name;
 
-    card.innerHTML = `
+export function initGame() {
+    game.innerHTML = "";
+    flippedCards = [];
+    matchedPairs = 0;
+    lockBoard = false;
+    let cards = [...data, ...data];
+    cards.sort(() => 0.5 - Math.random());
+
+    cards.forEach((symbol) => {
+        const card = document.createElement('div');
+        card.classList.add('card');
+        card.dataset.name = symbol.name;
+
+        card.innerHTML = `
         <div class="card-inner">
             <div class="card-front">
                 <img src="${symbol.img}" alt="${symbol.name}" />
@@ -22,12 +32,13 @@ cards.forEach((symbol, index) => {
         </div>
     `;
 
-    card.addEventListener("click", () => flipCard(card));
-    game.appendChild(card);
-})
+        card.addEventListener("click", () => flipCard(card));
+        game.appendChild(card);
+    })
+    startTimer(updateTimerUI);
+}
 
-
-function flipCard (card) {
+function flipCard(card) {
     if (lockBoard || flippedCards.includes(card) || card.classList.contains('matched')) return;
 
     card.classList.add('flip');
@@ -38,12 +49,18 @@ function flipCard (card) {
     }
 }
 
-function checkMatch () {
+function checkMatch() {
     const [card1, card2] = flippedCards;
     if (card1.dataset.name == card2.dataset.name) {
         card1.classList.add('matched');
         card2.classList.add('matched');
+        matchedPairs++;
         flippedCards = [];
+
+        if (matchedPairs === data.length) {
+            stopTimer();
+            setTimeout(() => showModal(getTime()), 600);
+        }
     } else {
         lockBoard = true;
         setTimeout(() => {
@@ -55,4 +72,8 @@ function checkMatch () {
     }
 }
 
+function updateTimerUI(seconds) {
+  const el = document.getElementById("timer");
+  if (el) el.textContent = `Время: ${seconds} сек`;
+}
 
