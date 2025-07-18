@@ -8,17 +8,17 @@ const game = document.getElementById("game-board");
 let flippedCards = [];
 let matchedPairs = 0;
 let lockBoard = false;
-let difficulty = 12;
 
 
-
-export function initGame() {
+export function initGame(pairCount = 12, columns = 4) {
     game.innerHTML = "";
     flippedCards = [];
     matchedPairs = 0;
     lockBoard = false;
-    const selected = setRandomData();
-    //let cards = [...data, ...data];
+
+    game.style.gridTemplateColumns = `repeat(${columns}, 100px)`;
+
+    const selected = setRandomData(pairCount);
     let cards = [...selected, ...selected]
     cards.sort(() => 0.5 - Math.random());
 
@@ -42,9 +42,9 @@ export function initGame() {
     startTimer(updateTimerUI);
 }
 
-function setRandomData () {
+function setRandomData (pairCount) {
     const shuffled = [...data].sort(() => Math.random() - 0.5);
-    return shuffled.slice(0, difficulty);
+    return shuffled.slice(0, pairCount);
 }
 
 function flipCard(card) {
@@ -66,7 +66,7 @@ function checkMatch() {
         matchedPairs++;
         flippedCards = [];
 
-        if (matchedPairs === data.length) {
+        if (matchedPairs === game.childElementCount / 2) {
             stopTimer();
             setTimeout(() => showModal(getTime()), 600);
         }

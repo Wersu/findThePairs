@@ -1,14 +1,15 @@
-import { initGame } from "./game.js";
-
-export function setupUI() {
+export function setupUI(onStartGame) {
   document.getElementById("restart-btn").addEventListener("click", () => {
-    initGame();
+    onStartGame();
   });
 
   document.getElementById("next-level-btn").addEventListener("click", () => {
-    // Пока просто перезапуск
     hideModal();
-    initGame();
+    onStartGame();
+  });
+
+  document.getElementById("difficulty").addEventListener("change", () => {
+    onStartGame();
   });
 }
 

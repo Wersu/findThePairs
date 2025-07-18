@@ -113,7 +113,6 @@ body {
 
 #game-board {
   display: grid;
-  grid-template-columns: repeat(6, 100px);
   gap: 1rem;
   justify-content: center;
   align-items: center;
@@ -205,4 +204,20 @@ body {
   padding: 2rem;
   border-radius: 12px;
   text-align: center;
+}
+
+.difficulty-select {
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.difficulty-select label {
+  font-weight: bold;
+}
+.difficulty-select select {
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
 }/*# sourceMappingURL=main.css.map */

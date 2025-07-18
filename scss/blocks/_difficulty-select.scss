@@ -1,0 +1,17 @@
+.difficulty-select {
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+
+  label {
+    font-weight: bold;
+  }
+
+  select {
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+  }
+}
