@@ -8,6 +8,8 @@ const game = document.getElementById("game-board");
 let flippedCards = [];
 let matchedPairs = 0;
 let lockBoard = false;
+let difficulty = 12;
+
 
 
 export function initGame() {
@@ -15,7 +17,9 @@ export function initGame() {
     flippedCards = [];
     matchedPairs = 0;
     lockBoard = false;
-    let cards = [...data, ...data];
+    const selected = setRandomData();
+    //let cards = [...data, ...data];
+    let cards = [...selected, ...selected]
     cards.sort(() => 0.5 - Math.random());
 
     cards.forEach((symbol) => {
@@ -36,6 +40,11 @@ export function initGame() {
         game.appendChild(card);
     })
     startTimer(updateTimerUI);
+}
+
+function setRandomData () {
+    const shuffled = [...data].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, difficulty);
 }
 
 function flipCard(card) {
