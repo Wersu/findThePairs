@@ -10,13 +10,16 @@ let matchedPairs = 0;
 let lockBoard = false;
 
 
-export function initGame(pairCount = 12, columns = 4) {
+export function initGame(pairCount = 12) {
     game.innerHTML = "";
     flippedCards = [];
     matchedPairs = 0;
     lockBoard = false;
 
-    game.style.gridTemplateColumns = `repeat(${columns}, 100px)`;
+    const totalCards = pairCount * 2;
+    const { columns, cardSize } = calculateGridLayout(totalCards);
+
+    game.style.gridTemplateColumns = `repeat(${columns}, ${cardSize}px)`;
 
     const selected = setRandomData(pairCount);
     let cards = [...selected, ...selected]
@@ -26,6 +29,9 @@ export function initGame(pairCount = 12, columns = 4) {
         const card = document.createElement('div');
         card.classList.add('card');
         card.dataset.name = symbol.name;
+
+        card.style.width = `${cardSize}px`;
+        card.style.height = `${cardSize}px`;
 
         card.innerHTML = `
         <div class="card-inner">
@@ -42,7 +48,7 @@ export function initGame(pairCount = 12, columns = 4) {
     startTimer(updateTimerUI);
 }
 
-function setRandomData (pairCount) {
+function setRandomData(pairCount) {
     const shuffled = [...data].sort(() => Math.random() - 0.5);
     return shuffled.slice(0, pairCount);
 }
@@ -82,7 +88,63 @@ function checkMatch() {
 }
 
 function updateTimerUI(seconds) {
-  const el = document.getElementById("timer");
-  if (el) el.textContent = `Время: ${seconds} сек`;
+    const el = document.getElementById("timer");
+    if (el) el.textContent = `Время: ${seconds} сек`;
 }
 
+
+function calculateGridLayout(totalCards) {
+    const containerWidth = document.getElementById("game-board").offsetWidth || window.innerWidth * 0.9;
+    const maxCardSize = (window.innerWidth * 0.8) > 768 ? 150 : 80;
+
+    let bestLayout = { columns: 1, cardSize: maxCardSize };
+    let minRatioDiff = Infinity;
+
+    for (let cols = 1; cols <= totalCards; cols++) {
+        if (totalCards % cols !== 0) continue;
+
+        const rows = Math.ceil(totalCards / cols);
+        const cardSize = Math.floor(containerWidth / cols);
+
+        const ratioDiff = Math.abs(cols - rows);
+
+        if (window.innerWidth > 768 ? ratioDiff <= minRatioDiff : ratioDiff < minRatioDiff) {
+            minRatioDiff = ratioDiff;
+            bestLayout = { columns: cols, cardSize: cardSize > maxCardSize ? maxCardSize : cardSize };
+        }
+
+    }
+
+    return bestLayout;
+}
+
+// function calculateGridLayout(totalCards) {
+//   const container = document.getElementById("game-board");
+//   const containerWidth = container.offsetWidth || window.innerWidth * 0.9;
+//   const containerHeight = window.innerHeight; // оставим 20% на заголовки/поля/кнопки
+
+//   const maxCardSize = window.innerWidth > 768 ? 150 : 80;
+
+//   let bestLayout = { columns: 1, cardSize: maxCardSize };
+//   let minRatioDiff = Infinity;
+
+//   for (let cols = 1; cols <= totalCards; cols++) {
+//     if (totalCards % cols !== 0) continue;
+//     const rows = Math.ceil(totalCards / cols);
+
+//     const cardWidth = Math.floor(containerWidth / cols);
+//     const cardHeight = Math.floor(containerHeight / rows);
+//     const cardSize = Math.min(cardWidth, cardHeight, maxCardSize);
+
+//     const ratioDiff = Math.abs(cols - rows);
+
+//     if (cardSize <= 20) continue; // слишком маленькие карточки — пропускаем
+
+//     if (ratioDiff < minRatioDiff) {
+//       minRatioDiff = ratioDiff;
+//       bestLayout = { columns: cols, cardSize };
+//     }
+//   }
+
+//   return bestLayout;
+// }

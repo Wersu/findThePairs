@@ -6,19 +6,19 @@ function getPairCountByDifficulty() {
 
   switch (difficulty) {
     case "easy":
-      return { pairs: 12, columns: 4 };
+      return 12;
     case "medium":
-      return { pairs: 18, columns: 6 };
+      return 18;
     case "hard":
-      return { pairs: 24, columns: 8 };
+      return 24;
     default:
-      return { pairs: 12, columns: 4 };
+      return 12;
   }
 }
 
 function startGame() {
-  const { pairs, columns } = getPairCountByDifficulty();
-  initGame(pairs, columns);
+  const pairs  = getPairCountByDifficulty();
+  initGame(pairs);
 }
 
 window.addEventListener("DOMContentLoaded", () => {
