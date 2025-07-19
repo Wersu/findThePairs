@@ -1,14 +1,13 @@
-.difficulty-select {
-  margin-bottom: 1rem;
+.difficulty {
   display: flex;
   gap: 1rem;
   align-items: center;
 
-  label {
+  &__label {
     font-weight: bold;
   }
 
-  select {
+  &__select {
     padding: 0.4rem 0.6rem;
     border-radius: 6px;
     border: 1px solid #ccc;

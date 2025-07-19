@@ -48,9 +48,9 @@ function setRandomData (pairCount) {
 }
 
 function flipCard(card) {
-    if (lockBoard || flippedCards.includes(card) || card.classList.contains('matched')) return;
+    if (lockBoard || flippedCards.includes(card) || card.classList.contains('card--matched')) return;
 
-    card.classList.add('flip');
+    card.classList.add('card--flipped');
     flippedCards.push(card);
 
     if (flippedCards.length === 2) {
@@ -61,8 +61,8 @@ function flipCard(card) {
 function checkMatch() {
     const [card1, card2] = flippedCards;
     if (card1.dataset.name == card2.dataset.name) {
-        card1.classList.add('matched');
-        card2.classList.add('matched');
+        card1.classList.add('card--matched');
+        card2.classList.add('card--matched');
         matchedPairs++;
         flippedCards = [];
 
@@ -73,8 +73,8 @@ function checkMatch() {
     } else {
         lockBoard = true;
         setTimeout(() => {
-            card1.classList.remove('flip');
-            card2.classList.remove('flip');
+            card1.classList.remove('card--flipped');
+            card2.classList.remove('card--flipped');
             flippedCards = [];
             lockBoard = false;
         }, 1000);

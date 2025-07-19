@@ -9,32 +9,32 @@
 </head>
 
 <body>
-    <div class="game-board-wrapper">
-        <h1>Найди пару</h1>
+    <div class="game">
+        <h1 class="game__title">Найди пару</h1>
 
-        <div id="timer">Время: 0 сек</div>
+        <div class="game__timer" id="timer">Время: 0 сек</div>
 
-        <div class="difficulty-select">
-            <label for="difficulty">Сложность:</label>
-            <select id="difficulty">
-                <option value="easy" selected>Лёгкий</option>
-                <option value="medium">Средний</option>
-                <option value="hard">Сложный</option>
+        <div class="game__difficulty difficulty">
+            <label class="difficulty__label" for="difficulty">Сложность:</label>
+            <select class="difficulty__select" id="difficulty">
+                <option class="difficulty__option" value="easy" selected>Лёгкий</option>
+                <option class="difficulty__option" value="medium">Средний</option>
+                <option class="difficulty__option" value="hard">Сложный</option>
             </select>
         </div>
 
-        <div id="game-board"></div>
+        <div class="game__board" id="game-board"></div>
 
-        <div class="controls">
-            <button id="restart-btn">Перезапуск</button>
+        <div class="game__controls controls">
+            <button class="controls__button" id="restart-btn">Перезапуск</button>
         </div>
     </div>
 
-    <div id="win-modal" class="modal none">
-        <div class="modal-content">
-            <h2>Поздравляем!</h2>
-            <p>Вы прошли уровень за <span id="final-time"></span> секунд.</p>
-            <button id="next-level-btn">Следующий уровень</button>
+    <div class="modal modal--hidden" id="win-modal">
+        <div class="modal__content">
+            <h2 class="modal__title">Поздравляем!</h2>
+            <p class="modal__text">Вы прошли уровень за <span class="modal__time" id="final-time"></span> секунд.</p>
+            <button class="modal__button" id="next-level-btn">Следующий уровень</button>
         </div>
     </div>
     <script type="module" src="js/main.js"></script>

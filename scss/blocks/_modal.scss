@@ -9,11 +9,16 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
-}
 
-.modal-content {
+  &--hidden{
+    display: none;
+  }
+
+  &__content {
   background: white;
   padding: 2rem;
   border-radius: 12px;
   text-align: center;
+}
+
 }
