@@ -94,57 +94,64 @@ function updateTimerUI(seconds) {
 
 
 function calculateGridLayout(totalCards) {
-    const containerWidth = document.getElementById("game-board").offsetWidth || window.innerWidth * 0.9;
-    const maxCardSize = (window.innerWidth * 0.8) > 768 ? 150 : 80;
+    const containerWidth = window.innerWidth * 0.9;
+    const containerHeight = window.innerHeight * 0.85;
+
+    const gapPx = parseInt(getComputedStyle(game).gap || 16);
+    const maxCardSize = (window.innerWidth) > 600 ? 150 : 80;
+    const minCardSize = window.innerWidth <= 600 ? 50 : 70;
 
     let bestLayout = { columns: 1, cardSize: maxCardSize };
-    let minRatioDiff = Infinity;
+    let bestScore = -Infinity;
 
     for (let cols = 1; cols <= totalCards; cols++) {
         if (totalCards % cols !== 0) continue;
 
         const rows = Math.ceil(totalCards / cols);
-        const cardSize = Math.floor(containerWidth / cols);
+        const totalGapX = gapPx * (cols - 1);
+        const totalGapY = gapPx * (rows - 1);
 
-        const ratioDiff = Math.abs(cols - rows);
+        const cardWidth = Math.floor((containerWidth - totalGapX) / cols);
+        const cardHeight = Math.floor((containerHeight - totalGapY) / rows);
+        const cardSize = Math.min(cardWidth, cardHeight);
+        const totalHeight = rows * cardSize + totalGapY;
 
-        if (window.innerWidth > 768 ? ratioDiff <= minRatioDiff : ratioDiff < minRatioDiff) {
-            minRatioDiff = ratioDiff;
-            bestLayout = { columns: cols, cardSize: cardSize > maxCardSize ? maxCardSize : cardSize };
+        if (cardSize < minCardSize) continue;
+        if (totalHeight > containerHeight) continue;
+
+        let score = cardSize;
+
+        if (window.innerWidth <= 425) {
+            if (cols < rows) {
+                score += 50;
+            }
+        } else {
+            const ratioDiff = Math.abs(cols - rows);
+            score -= ratioDiff * 2;
         }
 
+        if (score > bestScore) {
+            bestScore = score;
+            bestLayout = {
+                columns: cols,
+                cardSize: Math.min(cardSize, maxCardSize),
+            };
+        }
     }
 
     return bestLayout;
 }
 
-// function calculateGridLayout(totalCards) {
-//   const container = document.getElementById("game-board");
-//   const containerWidth = container.offsetWidth || window.innerWidth * 0.9;
-//   const containerHeight = window.innerHeight; // оставим 20% на заголовки/поля/кнопки
+export function updateLayout(pairCount) {
+    const game = document.getElementById("game-board");
+    const totalCards = pairCount * 2;
+    const { columns, cardSize } = calculateGridLayout(totalCards);
 
-//   const maxCardSize = window.innerWidth > 768 ? 150 : 80;
+    game.style.gridTemplateColumns = `repeat(${columns}, ${cardSize}px)`;
 
-//   let bestLayout = { columns: 1, cardSize: maxCardSize };
-//   let minRatioDiff = Infinity;
-
-//   for (let cols = 1; cols <= totalCards; cols++) {
-//     if (totalCards % cols !== 0) continue;
-//     const rows = Math.ceil(totalCards / cols);
-
-//     const cardWidth = Math.floor(containerWidth / cols);
-//     const cardHeight = Math.floor(containerHeight / rows);
-//     const cardSize = Math.min(cardWidth, cardHeight, maxCardSize);
-
-//     const ratioDiff = Math.abs(cols - rows);
-
-//     if (cardSize <= 20) continue; // слишком маленькие карточки — пропускаем
-
-//     if (ratioDiff < minRatioDiff) {
-//       minRatioDiff = ratioDiff;
-//       bestLayout = { columns: cols, cardSize };
-//     }
-//   }
-
-//   return bestLayout;
-// }
+    const cards = game.querySelectorAll(".card");
+    cards.forEach(card => {
+        card.style.width = `${cardSize}px`;
+        card.style.height = `${cardSize}px`;
+    });
+}

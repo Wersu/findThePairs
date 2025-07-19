@@ -1,5 +1,7 @@
-import { initGame } from './game.js';
+import { initGame, updateLayout } from './game.js';
 import { setupUI } from './ui.js';
+
+let pairs;
 
 function getPairCountByDifficulty() {
   const difficulty = document.getElementById("difficulty").value;
@@ -8,20 +10,24 @@ function getPairCountByDifficulty() {
     case "easy":
       return 12;
     case "medium":
-      return 18;
+      return 16;
     case "hard":
-      return 24;
+      return 20;
     default:
       return 12;
   }
 }
 
 function startGame() {
-  const pairs  = getPairCountByDifficulty();
+  pairs  = getPairCountByDifficulty();
   initGame(pairs);
 }
 
 window.addEventListener("DOMContentLoaded", () => {
   setupUI(startGame);
   startGame();
+});
+
+window.addEventListener("resize", () => {
+  updateLayout(pairs);
 });

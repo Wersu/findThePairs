@@ -122,6 +122,11 @@ body {
     gap: 10px;
   }
 }
+@media (max-width: 375px) {
+  .game__board {
+    gap: 5px;
+  }
+}
 .game__timer {
   font-size: 1.2rem;
   font-weight: bold;
@@ -131,7 +136,6 @@ body {
   margin-bottom: 1rem;
 }
 .card {
-  background: #ccc;
   border-radius: 12px;
   display: flex;
   justify-content: center;
