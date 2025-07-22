@@ -25,6 +25,7 @@
     &__timer {
         font-size: clamp(1.125rem, 1rem + 0.63vw, 1.563rem);
         margin-bottom: 1rem;
+        width: clamp(8.125rem, 7.768rem + 1.79vw, 9.375rem);
 
         border: 2px solid var(--border-color);
         padding: 5px 30px;
