@@ -14,6 +14,20 @@
   backface-visibility: hidden;
   border-radius: 20px;
   background: var(--card-bg);
+
+  box-shadow:
+    inset 6px 6px 15px var(--card-shadow),
+    inset -6px -6px 15px var(--card-shadow),
+    inset 6px -6px 15px var(--card-shadow),
+    inset -6px 6px 15px var(--card-shadow);
+
+  @media (max-width: 600px) {
+    box-shadow:
+      inset 6px 6px 10px var(--card-shadow),
+      inset -6px -6px 10px var(--card-shadow),
+      inset 6px -6px 10px var(--card-shadow),
+      inset -6px 6px 10px var(--card-shadow);
+  }
 }
 
 
@@ -37,12 +51,14 @@
 
 
   transition: transform 1s ease, box-shadow 1s ease;
+
   &:hover {
     animation: pulseShadowScale 1.2s infinite ease-in-out;
     z-index: 10;
+
     @media (max-width: 1024px) {
-    animation: none;
-  }
+      animation: none;
+    }
   }
 
   @media (max-width: 600px) {
@@ -51,12 +67,24 @@
 }
 
 @keyframes pulseShadowScale {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(1);
-    box-shadow: 0 0 8px rgba(191, 101, 252, 0.7);
+    box-shadow: 0 0 8px rgba(191, 101, 252, 0.7),
+      inset 6px 6px 15px var(--card-shadow),
+      inset -6px -6px 15px var(--card-shadow),
+      inset 6px -6px 15px var(--card-shadow),
+      inset -6px 6px 15px var(--card-shadow);
+    ;
   }
+
   50% {
     transform: scale(1.08);
-    box-shadow: 0 0 22px rgba(191, 101, 252, 1);
+    box-shadow: 0 0 22px rgba(191, 101, 252, 1), inset 6px 6px 15px var(--card-shadow),
+      inset -6px -6px 15px var(--card-shadow),
+      inset 6px -6px 15px var(--card-shadow),
+      inset -6px 6px 15px var(--card-shadow);
+    ;
   }
 }

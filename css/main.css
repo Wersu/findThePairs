@@ -93,6 +93,7 @@ legend {
   --hover-bg: rgba(0,0,0, 0.6);
   --text-font: "Uncial Antiqua", cursive;
   --modal-text: #fcebb4;
+  --card-shadow: rgba(158, 110, 71, 0.35);
 }
 
 html,
@@ -199,6 +200,13 @@ body::-webkit-scrollbar {
   backface-visibility: hidden;
   border-radius: 20px;
   background: var(--card-bg);
+  box-shadow: inset 6px 6px 15px var(--card-shadow), inset -6px -6px 15px var(--card-shadow), inset 6px -6px 15px var(--card-shadow), inset -6px 6px 15px var(--card-shadow);
+}
+@media (max-width: 600px) {
+  .card-front,
+  .card-back {
+    box-shadow: inset 6px 6px 10px var(--card-shadow), inset -6px -6px 10px var(--card-shadow), inset 6px -6px 10px var(--card-shadow), inset -6px 6px 10px var(--card-shadow);
+  }
 }
 
 .card-front {
@@ -237,11 +245,11 @@ body::-webkit-scrollbar {
 @keyframes pulseShadowScale {
   0%, 100% {
     transform: scale(1);
-    box-shadow: 0 0 8px rgba(191, 101, 252, 0.7);
+    box-shadow: 0 0 8px rgba(191, 101, 252, 0.7), inset 6px 6px 15px var(--card-shadow), inset -6px -6px 15px var(--card-shadow), inset 6px -6px 15px var(--card-shadow), inset -6px 6px 15px var(--card-shadow);
   }
   50% {
     transform: scale(1.08);
-    box-shadow: 0 0 22px rgb(191, 101, 252);
+    box-shadow: 0 0 22px rgb(191, 101, 252), inset 6px 6px 15px var(--card-shadow), inset -6px -6px 15px var(--card-shadow), inset 6px -6px 15px var(--card-shadow), inset -6px 6px 15px var(--card-shadow);
   }
 }
 .card {
