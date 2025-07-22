@@ -114,8 +114,10 @@ function flipCard(card) {
 function checkMatch() {
     const [card1, card2] = flippedCards;
     if (card1.dataset.name == card2.dataset.name) {
-        card1.classList.add('card--matched');
-        card2.classList.add('card--matched');
+        setTimeout(() => {
+            card1.classList.add('card--matched');
+            card2.classList.add('card--matched');
+        }, 500);
         matchedPairs++;
         flippedCards = [];
 
