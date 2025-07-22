@@ -33,10 +33,13 @@ export function initGame() {
     let cards = [...selectedData, ...selectedData];
     cards.sort(() => 0.5 - Math.random());
 
-    cards.forEach((data) => {
+    const fragment = document.createDocumentFragment();
+    cards.forEach(data => {
         const card = createCard(data, cardSize);
-        gameContainer.appendChild(card);
-    })
+        fragment.appendChild(card);
+    });
+    gameContainer.appendChild(fragment);
+    
     startTimer(updateTimerUI);
 }
 
@@ -95,45 +98,68 @@ function createCard(data, cardSize) {
         `;
 
     card.addEventListener("click", () => flipCard(card));
-    
+
     return card;
 }
 
 function flipCard(card) {
-    if (lockBoard || flippedCards.includes(card) || card.classList.contains('card--matched')) return;
+    if (!isCardClickable(card)) return;
 
-    card.classList.add('card--flipped');
+    applyCardFlip(card);
     flippedCards.push(card);
 
     if (flippedCards.length === 2) {
-        checkMatch();
+        handleCardPair();
     }
 }
 
+function isCardClickable(card) {
+    return !lockBoard && !flippedCards.includes(card) && !card.classList.contains('card--matched');
+}
 
-function checkMatch() {
+function applyCardFlip(card) {
+    card.classList.add('card--flipped');
+}
+
+
+function handleCardPair() {
     const [card1, card2] = flippedCards;
-    if (card1.dataset.name == card2.dataset.name) {
-        setTimeout(() => {
-            card1.classList.add('card--matched');
-            card2.classList.add('card--matched');
-        }, 500);
-        matchedPairs++;
-        flippedCards = [];
+    const isMatch = card1.dataset.name === card2.dataset.name;
 
-        if (matchedPairs === pairCount) {
-            stopTimer();
-            setTimeout(() => showModal(getTime()), 600);
-        }
-    } else {
-        lockBoard = true;
-        setTimeout(() => {
-            card1.classList.remove('card--flipped');
-            card2.classList.remove('card--flipped');
-            flippedCards = [];
-            lockBoard = false;
-        }, 1000);
+    isMatch ? handleMatch(card1, card2) : handleMismatch(card1, card2);
+}
+
+function handleMatch(card1, card2) {
+    setTimeout(() => {
+        markAsMatched(card1);
+        markAsMatched(card2);
+    }, 500);
+
+    matchedPairs++;
+    flippedCards = [];
+
+    if (matchedPairs === pairCount) {
+        stopTimer();
+        setTimeout(() => showModal(getTime()), 600);
     }
+}
+
+function handleMismatch(card1, card2) {
+    lockBoard = true;
+    setTimeout(() => {
+        unflipCard(card1);
+        unflipCard(card2);
+        flippedCards = [];
+        lockBoard = false;
+    }, 1000);
+}
+
+function markAsMatched(card) {
+    card.classList.add('card--matched');
+}
+
+function unflipCard(card) {
+    card.classList.remove('card--flipped');
 }
 
 function updateTimerUI(seconds) {
