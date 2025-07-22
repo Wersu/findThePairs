@@ -1,4 +1,4 @@
-# [Find the Pairs](https://wersu.github.io/findThePairs/) — браузерная игра на память в сеттинге фэнтази
+# [Find the Pairs](https://wersu.github.io/findThePairs/) — браузерная игра на память в сеттинге фэнтези
 
 Find the Pairs — адаптивная браузерная игра на чистом JavaScript с динамической сеткой, таймером и механикой поиска пар.
 
