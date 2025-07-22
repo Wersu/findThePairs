@@ -108,7 +108,7 @@ body {
 
 body {
   text-align: center;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(../../img/bg.jpg);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(../img/bg.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% 50%;
@@ -174,7 +174,7 @@ body::-webkit-scrollbar {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: -1;
-  background-image: url(../../img/title-bg.png);
+  background-image: url(../img/title-bg.png);
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -212,7 +212,7 @@ body::-webkit-scrollbar {
 .card-back {
   outline: 2px solid var(--border-color);
   outline-offset: -15px;
-  background-image: linear-gradient(rgba(249, 237, 213, 0.7), rgba(249, 237, 213, 0.7)), url(../../img/card-icon6.png);
+  background-image: linear-gradient(rgba(249, 237, 213, 0.7), rgba(249, 237, 213, 0.7)), url(../img/card-icon6.png);
   background-repeat: no-repeat;
   background-size: auto;
   background-position: 50% 50%;
@@ -368,7 +368,7 @@ body::-webkit-scrollbar {
   transform: translateY(-50%);
   width: 20px;
   height: 20px;
-  background-image: url("../../img/arrow-down.svg");
+  background-image: url(../img/arrow-down.svg);
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
