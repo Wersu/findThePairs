@@ -40,10 +40,13 @@
   &:hover {
     animation: pulseShadowScale 1.2s infinite ease-in-out;
     z-index: 10;
+    @media (max-width: 1024px) {
+    animation: none;
+  }
   }
 
   @media (max-width: 600px) {
-    outline-offset: -10px;
+    outline-offset: -7px;
   }
 }
 

@@ -223,9 +223,14 @@ body::-webkit-scrollbar {
   animation: pulseShadowScale 1.2s infinite ease-in-out;
   z-index: 10;
 }
+@media (max-width: 1024px) {
+  .card-back:hover {
+    animation: none;
+  }
+}
 @media (max-width: 600px) {
   .card-back {
-    outline-offset: -10px;
+    outline-offset: -7px;
   }
 }
 
