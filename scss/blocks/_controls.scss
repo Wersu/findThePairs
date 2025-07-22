@@ -1,22 +1,25 @@
+$button-size: clamp(4.375rem, 3.839rem + 2.68vw, 6.25rem);
+
 .controls {
   display: flex;
   justify-content: center;
 
-  
   &__button {
-      padding: 0.6rem 1.2rem;
-      font-size: 1rem;
-      background: #2196f3;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s;
+    padding: 15px;
+    border-radius: 100px;
+    cursor: pointer;
 
-      &:hover {
-        background: #1976d2;
-      }
+    width: $button-size;
+    height: $button-size;
+    border: 2px solid var(--border-color);
+    background-color: var(--muted-bg);
+    transition: background 0.2s;
+    backdrop-filter: blur(5px);
+
+    &:hover {
+      background: var(--hover-bg);
     }
 
-}
+  }
 
+}

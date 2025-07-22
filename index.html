@@ -11,9 +11,9 @@
 
 <body>
     <div class="game">
-        <h1 class="game__title">Найди пару</h1>
+        <h1 class="game__title">Find the pair</h1>
 
-        <div class="game__timer" id="timer">Время: 0 сек</div>
+        <div class="game__timer" id="timer">00:00</div>
 
         <div class="game__difficulty difficulty" id="difficulty-select">
             <div class="difficulty__selected">Easy</div>
@@ -27,7 +27,9 @@
         <div class="game__board" id="game-board"></div>
 
         <div class="game__controls controls">
-            <button class="controls__button" id="restart-btn">Перезапуск</button>
+            <button class="controls__button" id="restart-btn" aria-label="restart">
+                <img src="img/back-arrow.svg" alt="restart">
+            </button>
         </div>
     </div>
 
