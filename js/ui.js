@@ -15,7 +15,7 @@ export function setupUI(onStartGame) {
 
 export function showModal(seconds) {
   document.getElementById("final-time").textContent = seconds;
-  document.getElementById("win-modal").classList.remove("hidden");
+  document.getElementById("win-modal").classList.remove("modal--hidden");
 }
 
 function hideModal() {
