@@ -137,8 +137,14 @@ function checkMatch() {
 }
 
 function updateTimerUI(seconds) {
-    const el = document.getElementById("timer");
-    if (el) el.textContent = `Время: ${seconds} сек`;
+    const timer = document.getElementById("timer");
+    if (!timer) return;
+
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+
+    const formattedTime = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    timer.textContent = `${formattedTime}`;
 }
 
 
