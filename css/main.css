@@ -147,7 +147,6 @@ body::-webkit-scrollbar {
 }
 .game__timer {
   font-size: clamp(1.125rem, 1rem + 0.63vw, 1.563rem);
-  margin-bottom: 1rem;
   width: clamp(8.125rem, 7.768rem + 1.79vw, 9.375rem);
   border: 2px solid var(--border-color);
   padding: 5px 30px;
@@ -164,8 +163,7 @@ body::-webkit-scrollbar {
   position: relative;
   height: clamp(3.75rem, 3.393rem + 1.79vw, 5rem);
   font-size: clamp(1.563rem, 1.402rem + 0.8vw, 2.125rem);
-  margin-bottom: 30px;
-  margin-top: 30px;
+  margin: clamp(1.25rem, 1.071rem + 0.89vw, 1.875rem) 0;
   color: rgb(49, 36, 26);
   font-weight: bold;
 }
