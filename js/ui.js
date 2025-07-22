@@ -1,11 +1,15 @@
+import { goToNextDifficulty } from './game.js';
+
 export function setupUI(onStartGame) {
   document.getElementById("restart-btn").addEventListener("click", () => {
     onStartGame();
   });
 
   document.getElementById("next-level-btn").addEventListener("click", () => {
+
     hideModal();
-    onStartGame();
+    goToNextDifficulty();
+    onStartGame();  
   });
 
   initCustomSelect(() => {

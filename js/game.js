@@ -2,55 +2,101 @@ import data from './data.js'
 import { getTime, startTimer, stopTimer } from './timer.js';
 import { showModal } from './ui.js';
 
-const game = document.getElementById("game-board");
+const gameContainer = document.getElementById("game-board");
+
+let flippedCards;
+let matchedPairs;
+let lockBoard;
+
+let currentDifficulty;
+let pairCount;
+let totalCards;
 
 
-let flippedCards = [];
-let matchedPairs = 0;
-let lockBoard = false;
-
-
-export function initGame(pairCount = 12) {
-    game.innerHTML = "";
+export function initGame() {
+    gameContainer.innerHTML = "";
     flippedCards = [];
     matchedPairs = 0;
     lockBoard = false;
 
-    const totalCards = pairCount * 2;
-    const { columns, cardSize } = calculateGridLayout(totalCards);
+    currentDifficulty = getDifficulty();
 
-    game.style.gridTemplateColumns = `repeat(${columns}, ${cardSize}px)`;
+    pairCount = getPairCountByDifficulty();
+    totalCards = pairCount * 2;
 
-    const selected = setRandomData(pairCount);
-    let cards = [...selected, ...selected]
+
+    const { columns, cardSize } = calculateGridLayout();
+
+    gameContainer.style.gridTemplateColumns = `repeat(${columns}, ${cardSize}px)`;
+
+    const selectedData = setRandomData();
+    let cards = [...selectedData, ...selectedData];
     cards.sort(() => 0.5 - Math.random());
 
-    cards.forEach((symbol) => {
-        const card = document.createElement('div');
-        card.classList.add('card');
-        card.dataset.name = symbol.name;
-
-        card.style.width = `${cardSize}px`;
-        card.style.height = `${cardSize}px`;
-
-        card.innerHTML = `
-        <div class="card-inner">
-            <div class="card-front">
-                <img src="${symbol.img}" alt="${symbol.name}" />
-            </div>
-            <div class="card-back"></div>
-        </div>
-    `;
-
-        card.addEventListener("click", () => flipCard(card));
-        game.appendChild(card);
+    cards.forEach((data) => {
+        const card = createCard(data, cardSize);
+        gameContainer.appendChild(card);
     })
     startTimer(updateTimerUI);
 }
 
-function setRandomData(pairCount) {
-    const shuffled = [...data].sort(() => Math.random() - 0.5);
+
+export function updateLayout() {
+    const { columns, cardSize } = calculateGridLayout();
+
+    gameContainer.style.gridTemplateColumns = `repeat(${columns}, ${cardSize}px)`;
+
+    const cards = gameContainer.querySelectorAll(".card");
+    cards.forEach(card => {
+        card.style.width = `${cardSize}px`;
+        card.style.height = `${cardSize}px`;
+    });
+}
+
+function getDifficulty() {
+    const selected = document.querySelector("#difficulty-select .difficulty__selected");
+    return selected?.dataset?.value || "easy";
+}
+
+
+function getPairCountByDifficulty() {
+    switch (currentDifficulty) {
+        case "easy":
+            return 12;
+        case "medium":
+            return 16;
+        case "hard":
+            return 20;
+        default:
+            return 12;
+    }
+}
+
+function setRandomData() {
+    const shuffled = [...data].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, pairCount);
+}
+
+function createCard(data, cardSize) {
+    const card = document.createElement('div');
+    card.classList.add('card');
+    card.dataset.name = data.name;
+
+    card.style.width = `${cardSize}px`;
+    card.style.height = `${cardSize}px`;
+
+    card.innerHTML = `
+        <div class="card-inner">
+            <div class="card-front">
+                <img src="${data.img}" alt="${data.name}" />
+            </div>
+            <div class="card-back"></div>
+        </div>
+        `;
+
+    card.addEventListener("click", () => flipCard(card));
+    
+    return card;
 }
 
 function flipCard(card) {
@@ -64,6 +110,7 @@ function flipCard(card) {
     }
 }
 
+
 function checkMatch() {
     const [card1, card2] = flippedCards;
     if (card1.dataset.name == card2.dataset.name) {
@@ -72,7 +119,7 @@ function checkMatch() {
         matchedPairs++;
         flippedCards = [];
 
-        if (matchedPairs === game.childElementCount / 2) {
+        if (matchedPairs === pairCount) {
             stopTimer();
             setTimeout(() => showModal(getTime()), 600);
         }
@@ -93,11 +140,11 @@ function updateTimerUI(seconds) {
 }
 
 
-function calculateGridLayout(totalCards) {
+function calculateGridLayout() {
     const containerWidth = window.innerWidth * 0.9;
     const containerHeight = window.innerHeight * 0.85;
 
-    const gapPx = parseInt(getComputedStyle(game).gap || 16);
+    const gapPx = parseInt(getComputedStyle(gameContainer).gap || 16);
     const maxCardSize = (window.innerWidth) > 600 ? 150 : 80;
     const minCardSize = window.innerWidth <= 600 ? 50 : 70;
 
@@ -142,16 +189,22 @@ function calculateGridLayout(totalCards) {
     return bestLayout;
 }
 
-export function updateLayout(pairCount) {
-    const game = document.getElementById("game-board");
-    const totalCards = pairCount * 2;
-    const { columns, cardSize } = calculateGridLayout(totalCards);
+export function goToNextDifficulty() {
+    const difficulties = ["easy", "medium", "hard"];
+    const selected = document.querySelector("#difficulty-select .difficulty__selected");
+    const options = document.querySelectorAll("#difficulty-select .difficulty__option");
 
-    game.style.gridTemplateColumns = `repeat(${columns}, ${cardSize}px)`;
+    const current = selected?.dataset?.value || "easy";
+    const currentIndex = difficulties.indexOf(current);
+    const nextIndex = Math.min(currentIndex + 1, difficulties.length - 1);
+    const nextValue = difficulties[nextIndex];
 
-    const cards = game.querySelectorAll(".card");
-    cards.forEach(card => {
-        card.style.width = `${cardSize}px`;
-        card.style.height = `${cardSize}px`;
-    });
+    const nextOption = Array.from(options).find(opt => opt.dataset.value === nextValue);
+
+    if (nextOption && selected) {
+        selected.textContent = nextOption.textContent;
+        selected.dataset.value = nextValue;
+    }
+
+    currentDifficulty = nextValue;
 }
