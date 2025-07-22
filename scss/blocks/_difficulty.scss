@@ -1,16 +1,78 @@
 .difficulty {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
+  position: relative;
+  width: fit-content;
+  font-size: clamp(1.125rem, 1.089rem + 0.18vw, 1.25rem);
+  color: var(--ui-text-color);
+  z-index: 2;
 
-  &__label {
-    font-weight: bold;
+  &__selected {
+    padding: 10px 60px;
+    border: 2px solid var(--border-color);
+    border-radius: 30px;
+    background-color: var(--muted-bg);
+    cursor: pointer;
+    position: relative;
+    user-select: none;
+    backdrop-filter: blur(5px);
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: var(--hover-bg);
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: 20px;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+
+      background-image: url('../../img/arrow-down.svg');
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+
+      pointer-events: none;
+      transition: transform 0.3s ease;
+    }
   }
 
-  &__select {
-    padding: 0.4rem 0.6rem;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
+  &__options {
+    margin: 5px 0 0 0;
+    position: absolute;
+    width: 100%;
+    background-color: var(--hover-bg);
+    border-radius: 20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    z-index: 3;
   }
+
+  &.open &__options {
+    max-height: 300px;
+    border: 2px solid var(--border-color);
+  }
+
+  &.open &__selected {
+    background-color: var(--hover-bg);
+  }
+
+
+  &__option {
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    backdrop-filter: blur(5px);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+  }
+}
+}
+
+.difficulty.open .difficulty__selected::after {
+  transform: translateY(-50%) rotate(180deg);
 }

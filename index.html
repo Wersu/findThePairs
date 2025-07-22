@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Find the pairs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/main.css" />
 </head>
 
@@ -14,13 +15,13 @@
 
         <div class="game__timer" id="timer">Время: 0 сек</div>
 
-        <div class="game__difficulty difficulty">
-            <label class="difficulty__label" for="difficulty">Сложность:</label>
-            <select class="difficulty__select" id="difficulty">
-                <option class="difficulty__option" value="easy" selected>Лёгкий</option>
-                <option class="difficulty__option" value="medium">Средний</option>
-                <option class="difficulty__option" value="hard">Сложный</option>
-            </select>
+        <div class="game__difficulty difficulty" id="difficulty-select">
+            <div class="difficulty__selected">Easy</div>
+            <ul class="difficulty__options">
+                <li class="difficulty__option" data-value="easy" selected>Easy</li>
+                <li class="difficulty__option" data-value="medium">Medium</li>
+                <li class="difficulty__option" data-value="hard">Hard</li>
+            </ul>
         </div>
 
         <div class="game__board" id="game-board"></div>

@@ -85,7 +85,18 @@ legend {
   display: block;
 }
 
-html, body {
+:root {
+  --card-bg: #f9edd5;
+  --border-color: #c79d53;
+  --ui-text-color: #f5e8d3;
+  --muted-bg: rgba(0,0,0,0.3);
+  --hover-bg: rgba(0,0,0, 0.6);
+  --text-font: "Uncial Antiqua", cursive;
+  --modal-text: #fcebb4;
+}
+
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -227,16 +238,74 @@ body {
 }
 
 .difficulty {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
+  position: relative;
+  width: -moz-fit-content;
+  width: fit-content;
+  font-size: clamp(1.125rem, 1.089rem + 0.18vw, 1.25rem);
+  color: var(--ui-text-color);
+  z-index: 2;
 }
-.difficulty__label {
-  font-weight: bold;
+.difficulty__selected {
+  padding: 10px 60px;
+  border: 2px solid var(--border-color);
+  border-radius: 30px;
+  background-color: var(--muted-bg);
+  cursor: pointer;
+  position: relative;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  transition: background-color 0.3s ease;
 }
-.difficulty__select {
-  padding: 0.4rem 0.6rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
+.difficulty__selected:hover {
+  background-color: var(--hover-bg);
+}
+.difficulty__selected::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background-image: url("../../img/arrow-down.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  pointer-events: none;
+  transition: transform 0.3s ease;
+}
+.difficulty__options {
+  margin: 5px 0 0 0;
+  position: absolute;
+  width: 100%;
+  background-color: var(--hover-bg);
+  border-radius: 20px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  z-index: 3;
+}
+.difficulty.open .difficulty__options {
+  max-height: 300px;
+  border: 2px solid var(--border-color);
+}
+.difficulty.open .difficulty__selected {
+  background-color: var(--hover-bg);
+}
+.difficulty__option {
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+}
+.difficulty__option:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.difficulty.open .difficulty__selected::after {
+  transform: translateY(-50%) rotate(180deg);
 }/*# sourceMappingURL=main.css.map */
