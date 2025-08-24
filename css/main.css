@@ -105,16 +105,20 @@ body {
   overflow-x: hidden;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  height: -webkit-fill-available;
 }
 
 body {
+  min-height: 100vh;
   text-align: center;
   background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(../img/bg.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% 50%;
   color: white;
+  background-attachment: fixed;
   font-family: var(--text-font);
+  min-height: -webkit-fill-available;
 }
 
 body::-webkit-scrollbar {
