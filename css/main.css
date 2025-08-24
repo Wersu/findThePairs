@@ -105,21 +105,37 @@ body {
   overflow-x: hidden;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  min-height: 100vh;
+  min-height: 100svh;
   height: -webkit-fill-available;
 }
 
 body {
-  min-height: 100svh;
-  min-height: 100vh;
   text-align: center;
+  color: white;
+  font-family: var(--text-font);
+  background: none;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
   background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(../img/bg.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% 50%;
-  color: white;
-  background-attachment: fixed;
-  font-family: var(--text-font);
-  min-height: -webkit-fill-available;
+  height: 100vh;
+  height: 100lvh;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+html,
+body {
+  overscroll-behavior-y: contain;
 }
 
 body::-webkit-scrollbar {
